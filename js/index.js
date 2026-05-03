@@ -1,29 +1,48 @@
-// <{(--------- Завдання # (або "№") 1 ---------)}>
+// <{(--------- Завдання №1 ---------)}>
 const calculateTotalBalance = users => {
   return users.reduce((total, user) => total + user.balance, 0);
 };
 
-// <{(--------- Завдання # (або "№") 2 ---------)}>
+// <{(--------- Завдання №2 ---------)}>
 const getUsersWithFriend = (users, friendName) => {
-  return users
-    .filter(user => user.friends.includes(friendName))
-    .map(user => user.name);
+  return users.reduce((result, user) => {
+    if (user.friends.includes(friendName)) {
+      result.push(user.name);
+    }
+    return result;
+  }, []);
 };
 
-// <{(--------- Завдання # (або "№") 3 ---------)}>
+// <{(--------- Завдання №3 ---------)}>
 const getNamesSortedByFriendsCount = users => {
-  return [...users]
+  return users
+    .reduce((arr, user) => {
+      arr.push(user);
+      return arr;
+    }, [])
     .sort((a, b) => a.friends.length - b.friends.length)
-    .map(user => user.name);
+    .reduce((names, user) => {
+      names.push(user.name);
+      return names;
+    }, []);
 };
 
-// <{(--------- Завдання # (або "№") 4 ---------)}>
+// <{(--------- Завдання №4 ---------)}>
 const getSortedUniqueSkills = users => {
-  return [...new Set(users.flatMap(user => user.skills))].sort();
+  const uniqueSkills = users.reduce((skills, user) => {
+    user.skills.forEach(skill => {
+      if (!skills.includes(skill)) {
+        skills.push(skill);
+      }
+    });
+    return skills;
+  }, []);
+
+  return uniqueSkills.sort();
 };
 
 
-// <{(--------- ПЕРЕВІРКА ЗАВДАНЬ ---------)}>
+// <{(--------- ПЕРЕВІРКА ---------)}>
 console.log(calculateTotalBalance(users)); // 20916
 
 console.log(getUsersWithFriend(users, 'Briana Decker'));
@@ -33,7 +52,5 @@ console.log(getUsersWithFriend(users, 'Goldie Gentry'));
 // [ 'Elma Head', 'Sheree Anthony' ]
 
 console.log(getNamesSortedByFriendsCount(users));
-// [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
 
 console.log(getSortedUniqueSkills(users));
-// [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
